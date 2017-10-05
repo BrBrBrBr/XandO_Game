@@ -67,7 +67,7 @@ public class Game {
             Winner = true;
         }
     }
-
+ //the message displayed when someone wins
     public String WinMessage(String winnerName) {
         return ("Congratualtions " + winnerName + " you are the winner!!!");
     }

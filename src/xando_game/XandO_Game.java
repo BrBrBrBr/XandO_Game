@@ -2,9 +2,14 @@
 package xando_game;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Formatter;
 import java.util.Scanner;
 
 public class XandO_Game {
@@ -65,45 +70,52 @@ public class XandO_Game {
                 WantsToPlay = 3;
             }
         }
-        if (WantsToPlay == 2) {
+        if (WantsToPlay == 2 || WantsToPlay == 1) {
             viewFile();
-
-        } else {
+} 
+        else {
             System.out.println("Enter in 1 or 2");
         }
     }
 
 //file handeling methods
     public static void writeToFile(String WinnerName) {
-        //append
-        //Player Name: winner
-        //Game Date: d/a/te t:im:e
-        //***************************
-        String filename = "Winners.txt";
-        String textToAdd = "Player Name: "+WinnerName+"\n"+"Game Date: "+"\n"
-                +"*****************************************";//actuall date and time needs to be added
-        //create/open txtFile
-        //append
-        //close
-    }
-
-    public static void viewFile() {
-        BufferedReader reader = null;
-        String textFile = "Winners.txt";
+        String origionalData = "";
+        DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date winDate = new Date();
+        String textToAdd = "Player Name: " + WinnerName + "\n"
+                + "Game Date: " + df.format(winDate) + "\n"
+                + "*****************************************";
+        Scanner sc;
         try {
-            reader = new BufferedReader(new FileReader(textFile));
-            String line = "";
-            while (line != null) {
-                line = reader.readLine();
-                if (line != null) {
-                    System.out.print(line + "\n");
+            try {
+                sc = new Scanner(new File("Winners.txt"));
+                while (sc.hasNext()) {
+                    origionalData += sc.nextLine() + "\n";
                 }
+            } catch (Exception e) {
+                origionalData = "";
             }
-            reader.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+
+            Formatter file = new Formatter("Winners.txt");
+            file.format("%s", origionalData + textToAdd);
+            file.close();
+        } catch (Exception e) {
+            System.out.println("Error writing to file");
         }
+}
+    
+    public static void viewFile() {
+        String output = "";
+        Scanner read;
+        try {
+            read = new Scanner(new File("Winners.txt"));
+            while (read.hasNext()) {
+                output += read.nextLine() + "\n";
+            }
+        } catch (Exception e) {
+            System.out.println("no file to display from");
+        }
+        System.out.println(output);
     }
 }

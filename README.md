@@ -8,7 +8,4 @@ A simple game of X and O where 2 users play till a win or draw occurs and if a w
 * Methods
 * Classes
 * Obects
- ## Does It Work?
- Mostly,This program can play the game but cannot read and write to a file yet this is to be added in a later version.
- ## What Still Needs To Be Done?
- The code to read from and write to a txt file needs to be written.
+
